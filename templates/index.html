@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Court Data Fetcher — Faridabad</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+  <h2>Faridabad Court </h2>
+  <p class="text-muted">Enter case details. This app uses a local CAPTCHA to prevent automated abuse. If the court site asks for CAPTCHA, you'll be instructed to solve it manually (we don't bypass court CAPTCHAs).</p>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for cat, m in messages %}
+        <div class="alert alert-{{'warning' if cat=='message' else cat}}">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="post" class="card p-3">
+    <div class="mb-3">
+      <label class="form-label">Case Type</label>
+      <input class="form-control" name="case_type" value="{{ case_type or 'Civil' }}" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Case Number</label>
+      <input class="form-control" name="case_number" value="{{ case_number or '' }}" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Filing Year</label>
+      <input class="form-control" name="filing_year" value="{{ filing_year or '' }}" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Captcha: Solve</label>
+      <div class="input-group">
+        <span class="input-group-text">{{ captcha_q }}</span>
+        <input class="form-control" name="captcha" placeholder="Answer" required />
+      </div>
+      <div class="form-text">(Simple math captcha to avoid mass automation.)</div>
+    </div>
+
+    <button class="btn btn-primary">Search Case</button>
+  </form>
+
+  <hr />
+  <small class="text-muted"> Faridabad District Court (eCourts). For certain queries, the official eCourts page requires its own CAPTCHA; when that occurs our app will notify you. </small>
+</div>
+</body>
+</html>
